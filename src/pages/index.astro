@@ -3,7 +3,7 @@ import { graphQLClient, gql } from '../lib/graphql';
 
 const GET_HEALTHCAREACTIVIST_POSTS = gql`
   query GetHealthcareactivistPosts {
-    posts(where: { categoryName: "Healthcare Activist News" }) {
+    posts(where: { categoryNameIn: ["healthcare-activist", "all"] }) {
       nodes {
         title
         uri
