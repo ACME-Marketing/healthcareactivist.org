@@ -1,4 +1,5 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { graphQLClient, gql } from '../lib/graphql';
 
 const GET_HEALTHCAREACTIVIST_POSTS = gql`
@@ -26,16 +27,8 @@ try {
 }
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Healthcare Activist - Blog</title>
-	</head>
-	<body>
-		<h1>Welcome to Healthcare Activist Blog</h1>
+<BaseLayout title="Healthcare Activist - Blog">
+	<h1>Welcome to Healthcare Activist Blog</h1>
 
 		{posts.length > 0 ? (
 			<ul>
@@ -51,5 +44,4 @@ try {
 		) : (
 			<p>No posts found. Please add some posts in your WordPress CMS with the category "Healthcare Activist News".</p>
 		)}
-	</body>
-</html>
+</BaseLayout>
