@@ -28,8 +28,11 @@ try {
 ---
 
 <BaseLayout title="Healthcare Activist - Blog">
-	<h1>Welcome to Healthcare Activist Blog</h1>
+	<header>
+		<h1>Welcome to Healthcare Activist Blog</h1>
+	</header>
 
+	<main class="container">
 		{posts.length > 0 ? (
 			<ul>
 				{posts.map((post) => (
@@ -44,4 +47,9 @@ try {
 		) : (
 			<p>No posts found. Please add some posts in your WordPress CMS with the category "Healthcare Activist News".</p>
 		)}
+	</main>
+
+	<footer>
+		<p>&copy; {new Date().getFullYear()} Healthcare Activist. All rights reserved.</p>
+	</footer>
 </BaseLayout>
