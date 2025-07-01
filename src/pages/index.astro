@@ -4,7 +4,7 @@ import { graphQLClient, gql } from '../lib/graphql';
 
 const GET_HEALTHCAREACTIVIST_POSTS = gql`
   query GetHealthcareactivistPosts {
-    posts(where: { categoryNameIn: ["healthcare-activist", "all"] }) {
+    posts(where: { categoryNameIn: ["healthcareactivist", "all"] }) {
       nodes {
         title
         uri
@@ -27,9 +27,9 @@ try {
 }
 ---
 
-<BaseLayout title="Healthcare Activist - Blog">
+<BaseLayout title="Healthcare Activist">
 	<header>
-		<h1>Welcome to Healthcare Activist Blog</h1>
+		<h1>Welcome to Healthcare Activist</h1>
 	</header>
 
 	<main class="container">
