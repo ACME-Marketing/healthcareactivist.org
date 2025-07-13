@@ -1,16 +1,80 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+import { graphQLClient, gql } from '../lib/graphql';
 
+interface PostNode {
+  title: string;
+  uri: string;
+  content: string;
+  featuredImage: {
+    node: {
+      sourceUrl: string;
+      altText: string;
+    };
+  } | null;
+}
+
+interface GetPostsResponse {
+  posts: {
+    nodes: PostNode[];
+  };
+}
+
+const GET_POSTS = gql`
+  query GetPosts {
+    posts(first: 3, where: { tagSlugIn: ["healthcareactivist", "all"] }) {
+      nodes {
+        title
+        uri
+        content
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+      }
+    }
+  }
+`;
+
+const { posts } = await graphQLClient.request<GetPostsResponse>(GET_POSTS);
+
+const createExcerpt = (htmlContent: string, maxLength: number = 150) => {
+  const text = htmlContent.replace(/<[^>]+>/g, ''); // Strip HTML tags
+  if (text.length <= maxLength) {
+    return text;
+  }
+  const truncated = text.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  if (lastSpace === -1) {
+    return truncated + '...'; // No space found, just truncate
+  }
+  return truncated.substring(0, lastSpace) + '...';
+};
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Healthcare Activist">
+  <Hero />
+  <section class="py-12">
+    <div class="container mx-auto">
+      <h2 class="text-4xl font-bold font-heading text-center mb-8">Latest News & Updates</h2>
+      {posts.nodes.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.nodes.map((post: PostNode) => (
+            <Card
+              title={post.title}
+              href={`/posts${post.uri}`}
+              imageSrc={post.featuredImage?.node.sourceUrl}
+              imageAlt={post.featuredImage?.node.altText}
+              body={createExcerpt(post.content)}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-center text-lg">No posts found. Please check back later for new content.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>

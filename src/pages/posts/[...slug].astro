@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { graphQLClient, gql } from '../../lib/graphql';
+
+export async function getStaticPaths() {
+  const GET_FILTERED_POST_URIS = gql`
+    query GetFilteredPostUris {
+      posts(where: { tagSlugIn: ["healthcareactivist", "all"] }) {
+        nodes {
+          uri
+        }
+      }
+    }
+  `;
+
+  const data = await graphQLClient.request(GET_FILTERED_POST_URIS) as { posts: { nodes: { uri: string }[] } };
+
+  return data.posts.nodes.map((post) => ({
+    params: { slug: post.uri.replace(/^\/|\/$/g, '') },
+  }));
+}
+
+const GET_SINGLE_POST = gql`
+  query GetSinglePost($uri: String!) {
+    postBy(uri: $uri) {
+      title
+      content
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
+  }
+`;
+
+const { slug } = Astro.params;
+const uri = `/${slug}/`;
+
+let post = null;
+
+try {
+  const data = await graphQLClient.request(GET_SINGLE_POST, { uri }) as { postBy: any };
+  post = data.postBy;
+} catch (error) {
+  console.error(`Error fetching post with URI: ${uri}`, error);
+}
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+---
+<BaseLayout title={post.title}>
+  <article class="prose lg:prose-xl mx-auto">
+    <h1 class="text-4xl font-bold mb-4">{post.title}</h1>
+    {post.featuredImage?.node?.sourceUrl && (
+      <img src={post.featuredImage.node.sourceUrl} alt={post.featuredImage.node.altText || post.title} class="w-full h-auto rounded-lg mb-8" />
+    )}
+    <div set:html={post.content}></div>
+  </article>
+</BaseLayout>

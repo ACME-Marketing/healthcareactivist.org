@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../components/Logo-Final-300x300.jpg';
+const { title } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/global.css">
+</head>
+<body class="font-body">
+    <header class="bg-primary text-white p-4">
+        <nav class="container mx-auto flex justify-between">
+            <a href="/" class="font-bold flex items-center text-2xl font-heading">
+                <Image src={logo} alt="Healthcare Activist Logo" class="h-8 w-8 mr-2" />
+                Healthcare Activist
+            </a>
+            <div class="flex items-center">
+                <a href="/" class="px-4 hover:text-accent">Home</a>
+                <a href="/the-fight" class="px-4 hover:text-accent">The Fight</a>
+                <a href="/nurses-union-hub" class="px-4 hover:text-accent">Nurses Union Hub</a>
+                <a href="/patient-power" class="px-4 hover:text-accent">Patient Power</a>
+                <a href="/media" class="px-4 hover:text-accent">Media</a>
+                <a href="/posts" class="px-4 hover:text-accent">News & Stories</a>
+                <a href="/take-action" class="px-4 hover:text-accent">Take Action</a>
+                <a href="/about" class="px-4 hover:text-accent">About</a>
+            </div>
+        </nav>
+    </header>
+    <main class="container mx-auto p-4">
+        <slot />
+    </main>
+</body>
+</html>

@@ -9,6 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.11.0"
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.11.0",
+    "graphql-request": "^7.2.0",
+    "rss-parser": "^3.13.0"
   }
 }
