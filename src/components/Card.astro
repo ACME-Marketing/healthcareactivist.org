@@ -1,7 +1,5 @@
 ---
 // src/components/Card.astro
-import { Image } from 'astro:assets';
-
 export interface Props {
   title: string;
   href: string;
@@ -14,7 +12,7 @@ const { title, href, imageSrc, imageAlt, body } = Astro.props;
 ---
 <a href={href} class="block bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden">
   {imageSrc && (
-    <Image src={imageSrc} alt={imageAlt || ''} width={400} height={225} class="w-full h-48 object-cover" />
+    <img src={imageSrc} alt={imageAlt || ''} class="w-full h-48 object-cover" />
   )}
   <div class="p-6">
     <h3 class="font-heading text-2xl font-bold mb-2">{title}</h3>
