@@ -1,10 +1,83 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Content } from '../content/the-fight.md';
+import Card from '../components/Card.astro';
 ---
 
 <BaseLayout title="The Fight">
-  <div class="container mx-auto px-4">
-    <Content />
-  </div>
+  <section class="section-padding bg-white">
+    <div class="container mx-auto container-padding">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+          <h1 class="text-4xl md:text-5xl font-bold font-heading text-primary mb-6">The Fight</h1>
+          <p class="text-lg text-text max-w-2xl mx-auto">Understanding the challenges facing our healthcare system and why we must act now.</p>
+        </div>
+        
+        <!-- Enhanced markdown content with better styling -->
+        <div class="prose prose-lg max-w-none mb-12">
+          <Content />
+        </div>
+        
+        <!-- Related Action Cards -->
+        <div class="bg-gray-50 rounded-lg p-8 mb-12">
+          <h2 class="text-2xl font-bold font-heading text-primary mb-6 text-center">Take Action on These Issues</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card
+              title="Support Nurses"
+              href="/nurses-union-hub"
+              body="Join the fight for safe staffing ratios and better working conditions for healthcare workers."
+            />
+            <Card
+              title="Empower Patients"
+              href="/patient-power"
+              body="Learn about your rights and how to advocate for quality, affordable healthcare."
+            />
+          </div>
+        </div>
+        
+        <!-- Enhanced Call to Action Section -->
+        <div class="bg-gradient-to-r from-accent to-red-700 rounded-lg p-8 text-white text-center">
+          <h3 class="text-2xl font-bold font-heading mb-4">Ready to Join the Fight?</h3>
+          <p class="text-lg mb-6 opacity-95">The healthcare crisis demands immediate action. Here's how you can make a difference:</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <a href="/take-action#urgent-actions" class="bg-white bg-opacity-20 rounded-lg p-4 hover:bg-opacity-30 transition-all">
+              <div class="flex items-center justify-center mb-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+              </div>
+              <h4 class="font-bold text-sm mb-1">Urgent Actions</h4>
+              <p class="text-xs opacity-90">Stop harmful legislation</p>
+            </a>
+            
+            <a href="/take-action#contact" class="bg-white bg-opacity-20 rounded-lg p-4 hover:bg-opacity-30 transition-all">
+              <div class="flex items-center justify-center mb-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <h4 class="font-bold text-sm mb-1">Contact Reps</h4>
+              <p class="text-xs opacity-90">Make your voice heard</p>
+            </a>
+            
+            <a href="/take-action#petitions" class="bg-white bg-opacity-20 rounded-lg p-4 hover:bg-opacity-30 transition-all">
+              <div class="flex items-center justify-center mb-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              <h4 class="font-bold text-sm mb-1">Sign Petitions</h4>
+              <p class="text-xs opacity-90">Add your signature</p>
+            </a>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/take-action" class="btn-primary bg-white text-accent hover:bg-gray-100">View All Actions</a>
+            <a href="/media" class="btn-secondary border-white text-white hover:bg-white hover:text-accent">Watch Our Videos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

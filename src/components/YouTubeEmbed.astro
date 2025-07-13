@@ -7,7 +7,7 @@ interface Props {
 const { videoId } = Astro.props;
 ---
 
-<div class="youtube-embed">
+<div class="youtube-embed rounded-lg overflow-hidden shadow-md">
   <iframe
     width="560"
     height="315"
@@ -16,6 +16,7 @@ const { videoId } = Astro.props;
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen
+    class="w-full h-full"
   ></iframe>
 </div>
 
@@ -26,7 +27,7 @@ const { videoId } = Astro.props;
     height: 0;
     overflow: hidden;
     max-width: 100%;
-    background: #000;
+    background: #0A4C6A; /* Use primary color */
   }
   .youtube-embed iframe {
     position: absolute;
@@ -34,5 +35,6 @@ const { videoId } = Astro.props;
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 0.5rem; /* Match Tailwind rounded-lg */
   }
 </style>

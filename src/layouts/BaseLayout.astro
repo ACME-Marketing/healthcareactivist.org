@@ -11,30 +11,50 @@ const { title } = Astro.props;
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="font-body">
-    <header class="bg-primary text-white p-4">
-        <nav class="container mx-auto flex justify-between">
-            <a href="/" class="font-bold flex items-center text-2xl font-heading">
-                <Image src={logo} alt="Healthcare Activist Logo" class="h-8 w-8 mr-2" />
-                Healthcare Activist
-            </a>
-            <div class="flex items-center">
-                <a href="/" class="px-4 hover:text-accent">Home</a>
-                <a href="/the-fight" class="px-4 hover:text-accent">The Fight</a>
-                <a href="/nurses-union-hub" class="px-4 hover:text-accent">Nurses Union Hub</a>
-                <a href="/patient-power" class="px-4 hover:text-accent">Patient Power</a>
-                <a href="/media" class="px-4 hover:text-accent">Media</a>
-                <a href="/posts" class="px-4 hover:text-accent">News & Stories</a>
-                <a href="/take-action" class="px-4 hover:text-accent">Take Action</a>
-                <a href="/about" class="px-4 hover:text-accent">About</a>
+<body>
+    <header class="bg-primary text-white shadow-lg">
+        <nav class="container mx-auto container-padding py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="font-bold flex items-center text-2xl font-heading text-white hover:text-accent transition-colors duration-200">
+                    <Image src={logo} alt="Healthcare Activist Logo" class="h-10 w-10 mr-3 rounded-full" />
+                    Healthcare Activist
+                </a>
+                <div class="hidden md:flex items-center space-x-2">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/the-fight" class="nav-link">The Fight</a>
+                    <a href="/nurses-union-hub" class="nav-link">Nurses Union Hub</a>
+                    <a href="/patient-power" class="nav-link">Patient Power</a>
+                    <a href="/media" class="nav-link">Media</a>
+                    <a href="/posts" class="nav-link">News & Stories</a>
+                    <a href="/take-action" class="nav-link bg-accent text-white rounded-md hover:bg-red-700">Take Action</a>
+                    <a href="/about" class="nav-link">About</a>
+                </div>
+                <!-- Mobile menu button (placeholder for future implementation) -->
+                <div class="md:hidden">
+                    <button class="text-white hover:text-accent">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </nav>
     </header>
-    <main class="container mx-auto p-4">
+    <main class="min-h-screen">
         <slot />
     </main>
+    <footer class="bg-primary text-white section-padding mt-16">
+        <div class="container mx-auto container-padding text-center">
+            <p class="text-lg font-semibold mb-4">Healthcare Activist</p>
+            <p class="text-sm opacity-90">Fighting for a healthcare system that works for everyone.</p>
+            <div class="mt-6 flex justify-center space-x-6">
+                <a href="/about" class="hover:text-accent transition-colors">About</a>
+                <a href="/take-action" class="hover:text-accent transition-colors">Take Action</a>
+                <a href="/privacy" class="hover:text-accent transition-colors">Privacy</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

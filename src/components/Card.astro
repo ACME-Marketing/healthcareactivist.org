@@ -10,12 +10,17 @@ export interface Props {
 
 const { title, href, imageSrc, imageAlt, body } = Astro.props;
 ---
-<a href={href} class="block bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden">
+<a href={href} class="card block group">
   {imageSrc && (
-    <img src={imageSrc} alt={imageAlt || ''} class="w-full h-48 object-cover" />
+    <div class="overflow-hidden">
+      <img src={imageSrc} alt={imageAlt || ''} class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-200" />
+    </div>
   )}
   <div class="p-6">
-    <h3 class="font-heading text-2xl font-bold mb-2">{title}</h3>
-    {body && <p class="text-text line-clamp-3">{body}</p>}
+    <h3 class="font-heading text-xl md:text-2xl font-bold mb-3 text-primary group-hover:text-accent transition-colors duration-200">{title}</h3>
+    {body && <p class="text-text leading-relaxed line-clamp-3">{body}</p>}
+    <div class="mt-4 text-accent font-semibold text-sm group-hover:underline">
+      Read More →
+    </div>
   </div>
 </a>

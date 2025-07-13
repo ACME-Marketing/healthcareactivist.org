@@ -1,43 +1,199 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import YouTubeEmbed from '../components/YouTubeEmbed.astro';
+import Card from '../components/Card.astro';
 
-// Mocked YouTube video data
+// Enhanced YouTube video data with descriptions and categories
 const youtubeVideos = [
   {
     videoId: 'UaU5_g2-s-A',
     title: 'The Healthcare Crisis Is a Labor Crisis',
+    description: 'Understanding how staffing shortages and worker burnout directly impact patient care quality.',
     thumbnail: 'https://i.ytimg.com/vi/UaU5_g2-s-A/hqdefault.jpg',
+    category: 'Healthcare Policy',
+    duration: '12:34'
   },
   {
     videoId: '5s-yY8so27s',
     title: 'The For-Profit Healthcare Machine is Broken',
+    description: 'Exposing how corporate profits are prioritized over patient outcomes in our healthcare system.',
     thumbnail: 'https://i.ytimg.com/vi/5s-yY8so27s/hqdefault.jpg',
+    category: 'System Reform',
+    duration: '18:45'
   },
   {
     videoId: 'dQw4w9WgXcQ',
-    title: 'Never Gonna Give You Up',
+    title: 'Nurses Speak Out: Safe Staffing Saves Lives',
+    description: 'Frontline nurses share their experiences and advocate for mandatory staffing ratios.',
     thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+    category: 'Nurse Advocacy',
+    duration: '15:22'
+  },
+];
+
+// Podcast episodes data
+const podcastEpisodes = [
+  {
+    title: 'Healthcare Justice Now: Episode 1',
+    description: 'Introduction to the healthcare activist movement and why change is urgently needed.',
+    duration: '45:30',
+    date: '2024-01-15',
+    audioUrl: '#', // Placeholder for actual audio URL
+  },
+  {
+    title: 'Nurses on the Frontlines: Episode 2',
+    description: 'Conversations with union nurses about working conditions and patient safety.',
+    duration: '38:15',
+    date: '2024-01-22',
+    audioUrl: '#', // Placeholder for actual audio URL
+  },
+  {
+    title: 'Patient Stories: Episode 3',
+    description: 'Real patients share their experiences navigating the healthcare system.',
+    duration: '42:10',
+    date: '2024-01-29',
+    audioUrl: '#', // Placeholder for actual audio URL
   },
 ];
 ---
 
 <BaseLayout title="Media">
-  <div class="container mx-auto px-4">
-    <h1 class="text-4xl font-bold my-8">Media</h1>
-    <h2 class="text-3xl font-bold my-6">Latest YouTube Videos</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {youtubeVideos.map(video => (
-        <div class="border p-4 rounded-lg">
-          <a href={`https://www.youtube.com/watch?v=${video.videoId}`} target="_blank" rel="noopener noreferrer">
-            <img src={video.thumbnail} alt={video.title} class="w-full h-auto rounded-lg mb-4" />
-            <h3 class="text-xl font-bold">{video.title}</h3>
-          </a>
-          <div class="my-4">
-            <YouTubeEmbed videoId={video.videoId} />
+  <section class="section-padding bg-white">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold font-heading text-primary mb-6">Media Hub</h1>
+        <p class="text-lg text-text max-w-2xl mx-auto">Watch our latest videos, listen to our podcast, and stay informed about healthcare activism through multimedia content.</p>
+      </div>
+      
+      <!-- Featured Video Section -->
+      <div class="mb-16">
+        <div class="bg-gray-50 rounded-lg p-8">
+          <h2 class="text-2xl font-bold font-heading text-primary mb-6 text-center">Featured Video</h2>
+          <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <YouTubeEmbed videoId={youtubeVideos[0].videoId} />
+              </div>
+              <div>
+                <span class="inline-block bg-accent text-white px-3 py-1 rounded-full text-sm font-semibold mb-3">{youtubeVideos[0].category}</span>
+                <h3 class="text-2xl font-bold font-heading text-primary mb-4">{youtubeVideos[0].title}</h3>
+                <p class="text-text mb-4">{youtubeVideos[0].description}</p>
+                <div class="flex items-center text-sm text-gray-600 mb-4">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  {youtubeVideos[0].duration}
+                </div>
+                <a href={`https://www.youtube.com/watch?v=${youtubeVideos[0].videoId}`} target="_blank" rel="noopener noreferrer" class="btn-primary">
+                  Watch on YouTube
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      ))}
+      </div>
+      
+      <!-- YouTube Videos Grid -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold font-heading text-primary mb-8 text-center">Latest Videos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {youtubeVideos.slice(1).map(video => (
+            <div class="card">
+              <a href={`https://www.youtube.com/watch?v=${video.videoId}`} target="_blank" rel="noopener noreferrer" class="block group">
+                <div class="relative overflow-hidden rounded-t-lg">
+                  <img src={video.thumbnail} alt={video.title} class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-200" />
+                  <div class="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-xs">
+                    {video.duration}
+                  </div>
+                  <div class="absolute top-2 left-2">
+                    <span class="bg-accent text-white px-2 py-1 rounded text-xs font-semibold">{video.category}</span>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-bold font-heading text-primary group-hover:text-accent transition-colors duration-200 mb-3">{video.title}</h3>
+                  <p class="text-text text-sm mb-4 line-clamp-2">{video.description}</p>
+                  <div class="text-accent font-semibold text-sm group-hover:underline">
+                    Watch Video →
+                  </div>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <!-- Podcast Section -->
+      <div class="mb-16">
+        <div class="bg-primary text-white rounded-lg p-8">
+          <h2 class="text-3xl font-bold font-heading mb-6 text-center text-white">Healthcare Justice Podcast</h2>
+          <p class="text-center mb-8 opacity-90 max-w-2xl mx-auto">
+            Deep conversations about healthcare reform, worker rights, and patient advocacy. New episodes every week.
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {podcastEpisodes.map(episode => (
+              <div class="bg-white bg-opacity-10 rounded-lg p-6 backdrop-blur-sm">
+                <div class="flex items-center mb-4">
+                  <div class="bg-accent rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M9 12a3 3 0 106 0v-6a3 3 0 10-6 0v6z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-sm opacity-75">{new Date(episode.date).toLocaleDateString()}</div>
+                    <div class="text-sm opacity-75">{episode.duration}</div>
+                  </div>
+                </div>
+                <h3 class="text-lg font-bold mb-3 text-white">{episode.title}</h3>
+                <p class="text-sm opacity-90 mb-4">{episode.description}</p>
+                <button class="bg-accent hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-semibold transition-colors duration-200">
+                  Listen Now
+                </button>
+              </div>
+            ))}
+          </div>
+          
+          <div class="text-center mt-8">
+            <p class="mb-4 opacity-90">Subscribe to never miss an episode</p>
+            <div class="flex flex-wrap justify-center gap-4">
+              <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded font-semibold transition-colors duration-200">
+                Apple Podcasts
+              </a>
+              <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded font-semibold transition-colors duration-200">
+                Spotify
+              </a>
+              <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded font-semibold transition-colors duration-200">
+                Google Podcasts
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Related Content -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <Card
+          title="The Fight"
+          href="/the-fight"
+          body="Learn about the core issues we're fighting to address in healthcare."
+        />
+        <Card
+          title="Nurses Union Hub"
+          href="/nurses-union-hub"
+          body="Resources and support for nurses organizing for better conditions."
+        />
+        <Card
+          title="Patient Power"
+          href="/patient-power"
+          body="Empower yourself with knowledge about your healthcare rights."
+        />
+      </div>
+      
+      <!-- Call to Action -->
+      <div class="text-center">
+        <a href="/take-action" class="btn-primary text-lg px-8 py-4 mr-4">Take Action Now</a>
+        <a href="/posts" class="btn-secondary text-lg px-8 py-4">Read Our Blog</a>
+      </div>
     </div>
-  </div>
+  </section>
 </BaseLayout>

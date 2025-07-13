@@ -1,9 +1,2 @@
-body {
-    background-color: #F8F9FA;
-    color: #333333;
-    font-family: 'Open Sans', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-}
+/* This file is now handled by Tailwind CSS in src/styles/global.css */
+/* Keeping this file for any future custom styles that need to be loaded globally */

@@ -1,0 +1,324 @@
+---
+// src/components/ContactForm.astro
+export interface Props {
+  title: string;
+  description: string;
+  actionType: 'representative' | 'campaign' | 'newsletter' | 'general';
+  submitText?: string;
+  showLocationFields?: boolean;
+}
+
+const { 
+  title, 
+  description, 
+  actionType, 
+  submitText = 'Submit', 
+  showLocationFields = false 
+} = Astro.props;
+
+const formId = `${actionType}-form`;
+---
+
+<div class="bg-white rounded-lg shadow-lg p-8">
+  <div class="mb-6">
+    <h3 class="text-2xl font-bold font-heading text-primary mb-3">{title}</h3>
+    <p class="text-text leading-relaxed">{description}</p>
+  </div>
+  
+  <form id={formId} class="space-y-6" data-action-type={actionType}>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label for={`${formId}-firstName`} class="block text-sm font-semibold text-primary mb-2">
+          First Name *
+        </label>
+        <input 
+          type="text" 
+          id={`${formId}-firstName`}
+          name="firstName"
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+          placeholder="Enter your first name"
+        />
+      </div>
+      
+      <div>
+        <label for={`${formId}-lastName`} class="block text-sm font-semibold text-primary mb-2">
+          Last Name *
+        </label>
+        <input 
+          type="text" 
+          id={`${formId}-lastName`}
+          name="lastName"
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+          placeholder="Enter your last name"
+        />
+      </div>
+    </div>
+    
+    <div>
+      <label for={`${formId}-email`} class="block text-sm font-semibold text-primary mb-2">
+        Email Address *
+      </label>
+      <input 
+        type="email" 
+        id={`${formId}-email`}
+        name="email"
+        required
+        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+        placeholder="Enter your email address"
+      />
+    </div>
+    
+    {showLocationFields && (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for={`${formId}-state`} class="block text-sm font-semibold text-primary mb-2">
+            State *
+          </label>
+          <select 
+            id={`${formId}-state`}
+            name="state"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+          >
+            <option value="">Select your state</option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
+            <option value="WA">Washington</option>
+            <option value="WV">West Virginia</option>
+<option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for={`${formId}-zipCode`} class="block text-sm font-semibold text-primary mb-2">
+            ZIP Code *
+          </label>
+          <input 
+            type="text" 
+            id={`${formId}-zipCode`}
+            name="zipCode"
+            required
+            pattern="[0-9]{5}(-[0-9]{4})?"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
+            placeholder="Enter your ZIP code"
+          />
+        </div>
+      </div>
+    )}
+    
+    {actionType === 'representative' && (
+      <div>
+        <label for={`${formId}-message`} class="block text-sm font-semibold text-primary mb-2">
+          Your Message *
+        </label>
+        <textarea 
+          id={`${formId}-message`}
+          name="message"
+          required
+          rows="6"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors resize-vertical"
+          placeholder="Write your message to your representatives about healthcare reform..."
+        ></textarea>
+        <p class="text-sm text-gray-600 mt-2">
+          Tip: Be specific about the healthcare issues that matter most to you and your community.
+        </p>
+      </div>
+    )}
+    
+    {actionType === 'campaign' && (
+      <div>
+        <label for={`${formId}-involvement`} class="block text-sm font-semibold text-primary mb-2">
+          How would you like to get involved? *
+        </label>
+        <div class="space-y-3">
+          <label class="flex items-center">
+            <input type="checkbox" name="involvement" value="volunteer" class="mr-3 text-accent focus:ring-accent">
+            <span class="text-text">Volunteer for campaigns</span>
+          </label>
+          <label class="flex items-center">
+            <input type="checkbox" name="involvement" value="organize" class="mr-3 text-accent focus:ring-accent">
+            <span class="text-text">Help organize local events</span>
+          </label>
+          <label class="flex items-center">
+            <input type="checkbox" name="involvement" value="share" class="mr-3 text-accent focus:ring-accent">
+            <span class="text-text">Share content on social media</span>
+          </label>
+          <label class="flex items-center">
+            <input type="checkbox" name="involvement" value="donate" class="mr-3 text-accent focus:ring-accent">
+            <span class="text-text">Make financial contributions</span>
+          </label>
+        </div>
+      </div>
+    )}
+    
+    {actionType === 'newsletter' && (
+      <div>
+        <label class="flex items-start">
+          <input type="checkbox" name="updates" value="all" checked class="mr-3 mt-1 text-accent focus:ring-accent">
+          <div>
+            <span class="text-text font-semibold">Send me updates about:</span>
+            <ul class="text-sm text-gray-600 mt-1 space-y-1">
+              <li>• Healthcare reform legislation</li>
+              <li>• Action opportunities in my area</li>
+              <li>• Success stories and campaign updates</li>
+              <li>• Educational resources and tools</li>
+            </ul>
+          </div>
+        </label>
+      </div>
+    )}
+    
+    <div class="flex items-center justify-between pt-4">
+      <div class="flex items-center">
+        <div class="form-status hidden" id={`${formId}-status`}>
+          <div class="success-message hidden bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
+            <div class="flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Thank you! Your submission has been received.</span>
+            </div>
+          </div>
+          <div class="error-message hidden bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+            <div class="flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>There was an error submitting your form. Please try again.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button 
+        type="submit" 
+        class="btn-primary flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+        id={`${formId}-submit`}
+      >
+        <span class="submit-text">{submitText}</span>
+        <span class="loading-text hidden">Submitting...</span>
+        <svg class="loading-spinner hidden animate-spin ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Form handling functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('form[data-action-type]') as NodeListOf<HTMLFormElement>;
+    
+    forms.forEach(form => {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formId = form.id;
+        const submitButton = document.getElementById(`${formId}-submit`) as HTMLButtonElement;
+        const statusDiv = document.getElementById(`${formId}-status`) as HTMLElement;
+        
+        if (!submitButton || !statusDiv) return;
+        
+        const submitText = submitButton.querySelector('.submit-text') as HTMLElement;
+        const loadingText = submitButton.querySelector('.loading-text') as HTMLElement;
+        const loadingSpinner = submitButton.querySelector('.loading-spinner') as HTMLElement;
+        const successMessage = statusDiv.querySelector('.success-message') as HTMLElement;
+        const errorMessage = statusDiv.querySelector('.error-message') as HTMLElement;
+        
+        if (!submitText || !loadingText || !loadingSpinner || !successMessage || !errorMessage) return;
+        
+        // Show loading state
+        submitButton.disabled = true;
+        submitText.classList.add('hidden');
+        loadingText.classList.remove('hidden');
+        loadingSpinner.classList.remove('hidden');
+        
+        // Hide previous status messages
+        statusDiv.classList.add('hidden');
+        successMessage.classList.add('hidden');
+        errorMessage.classList.add('hidden');
+        
+        try {
+          // Simulate form submission (replace with actual API call)
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          // Show success message
+          statusDiv.classList.remove('hidden');
+          successMessage.classList.remove('hidden');
+          
+          // Reset form
+          form.reset();
+          
+          // Track action completion (for analytics)
+          if (typeof (window as any).gtag !== 'undefined') {
+            (window as any).gtag('event', 'form_submit', {
+              'event_category': 'engagement',
+              'event_label': form.dataset.actionType
+            });
+          }
+          
+        } catch (error) {
+          // Show error message
+          statusDiv.classList.remove('hidden');
+          errorMessage.classList.remove('hidden');
+        } finally {
+          // Reset button state
+          submitButton.disabled = false;
+          submitText.classList.remove('hidden');
+          loadingText.classList.add('hidden');
+          loadingSpinner.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+            

@@ -1,12 +1,345 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import ActionCard from '../components/ActionCard.astro';
+import RepresentativeFinder from '../components/RepresentativeFinder.astro';
 ---
 
-<BaseLayout title="Take Action">
-  <div class="container mx-auto px-4">
-    <h1 class="text-4xl font-bold my-8">Take Action</h1>
-    <p class="text-lg">
-      This page will be a central hub for mobilization, featuring petitions, tools for contacting legislators, and other engagement opportunities. Content is currently in development.
-    </p>
-  </div>
+<BaseLayout title="Take Action - Healthcare Activist">
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-accent to-red-700 text-white section-padding">
+    <div class="container mx-auto container-padding text-center">
+      <h1 class="text-4xl md:text-6xl font-bold font-heading mb-6 text-white leading-tight">
+        Take Action Now
+      </h1>
+      <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed opacity-95">
+        Your voice matters. Join thousands of healthcare workers and advocates fighting for a system that puts patients before profits.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#urgent-actions" class="btn-primary bg-white text-accent hover:bg-gray-100">View Urgent Actions</a>
+        <a href="#contact" class="btn-secondary border-white text-white hover:bg-white hover:text-accent">Contact Representatives</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Urgent Actions Section -->
+  <section id="urgent-actions" class="section-padding bg-white">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-4">Urgent Actions</h2>
+        <p class="text-lg text-text max-w-2xl mx-auto">Time-sensitive campaigns that need your immediate attention.</p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <ActionCard
+          title="Stop Healthcare Privatization Bill"
+          description="Congress is considering legislation that would further privatize Medicare. We need 10,000 signatures by Friday to show opposition."
+          actionType="urgent"
+          progress={73}
+          deadline="3 days left"
+          participants={7342}
+          ctaText="Sign Petition Now"
+          ctaLink="#petitions"
+          tags={["Medicare", "Privatization", "Congress"]}
+        />
+        
+        <ActionCard
+          title="Support Nurse Staffing Standards"
+          description="Help us advocate for mandatory nurse-to-patient ratios that will improve patient safety and working conditions."
+          actionType="urgent"
+          progress={45}
+          deadline="1 week left"
+          participants={3891}
+          ctaText="Add Your Voice"
+          ctaLink="#petitions"
+          tags={["Nursing", "Patient Safety", "Staffing"]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Ongoing Campaigns Section -->
+  <section class="section-padding bg-gray-50">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-4">Ongoing Campaigns</h2>
+        <p class="text-lg text-text max-w-2xl mx-auto">Long-term initiatives working toward systemic healthcare reform.</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <ActionCard
+          title="Medicare for All Advocacy"
+          description="Building grassroots support for universal healthcare coverage across the United States."
+          actionType="ongoing"
+          progress={62}
+          participants={15420}
+          ctaText="Join Campaign"
+          ctaLink="#campaigns"
+          tags={["Medicare4All", "Universal Healthcare"]}
+        />
+        
+        <ActionCard
+          title="Prescription Drug Price Reform"
+          description="Advocating for legislation to cap prescription drug costs and increase transparency in pricing."
+          actionType="ongoing"
+          progress={38}
+          participants={8934}
+          ctaText="Get Involved"
+          ctaLink="#campaigns"
+          tags={["Drug Prices", "Transparency", "Reform"]}
+        />
+        
+        <ActionCard
+          title="Healthcare Worker Protection"
+          description="Ensuring healthcare workers have proper PPE, safe working conditions, and fair compensation."
+          actionType="ongoing"
+          progress={55}
+          participants={12067}
+          ctaText="Support Workers"
+          ctaLink="#campaigns"
+          tags={["Worker Rights", "Safety", "PPE"]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Representatives Section -->
+  <section id="contact" class="section-padding bg-white">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-4">Contact Your Representatives</h2>
+        <p class="text-lg text-text max-w-2xl mx-auto">Make your voice heard by contacting your elected officials about healthcare reform.</p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <RepresentativeFinder />
+        
+        <ContactForm
+          title="Send a Message"
+          description="Use this form to send a personalized message to your representatives about healthcare issues that matter to you."
+          actionType="representative"
+          submitText="Send Message"
+          showLocationFields={true}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Petitions Section -->
+  <section id="petitions" class="section-padding bg-gray-50">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-4">Sign Petitions</h2>
+        <p class="text-lg text-text max-w-2xl mx-auto">Add your signature to critical healthcare reform petitions.</p>
+      </div>
+      
+      <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <div class="text-center mb-8">
+            <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold font-heading text-primary mb-4">Healthcare Reform Petition</h3>
+            <p class="text-text leading-relaxed mb-6">
+              Join thousands of Americans demanding comprehensive healthcare reform that prioritizes patients over profits.
+            </p>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
+                <span>Signatures</span>
+                <span>8,742 of 10,000 goal</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="bg-accent h-3 rounded-full" style="width: 87.42%"></div>
+              </div>
+            </div>
+          </div>
+          
+          <ContactForm
+            title=""
+            description=""
+            actionType="campaign"
+            submitText="Sign Petition"
+            showLocationFields={false}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section id="events" class="section-padding bg-white">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-4">Upcoming Events</h2>
+        <p class="text-lg text-text max-w-2xl mx-auto">Join us at rallies, town halls, and advocacy events in your area.</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Event 1 -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-accent text-white rounded-lg p-3 mr-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">January 25, 2024</p>
+                <p class="text-sm text-gray-600">2:00 PM - 4:00 PM</p>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold font-heading text-primary mb-3">Healthcare Town Hall</h3>
+            <p class="text-text mb-4">Join community leaders and healthcare advocates to discuss local healthcare challenges and solutions.</p>
+            <p class="text-sm text-gray-600 mb-4">📍 Community Center, Downtown</p>
+            <a href="#" class="btn-primary w-full text-center">Register Now</a>
+          </div>
+        </div>
+        
+        <!-- Event 2 -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-primary text-white rounded-lg p-3 mr-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">February 2, 2024</p>
+                <p class="text-sm text-gray-600">10:00 AM - 12:00 PM</p>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold font-heading text-primary mb-3">Medicare for All Rally</h3>
+            <p class="text-text mb-4">Stand with thousands demanding universal healthcare coverage for all Americans.</p>
+            <p class="text-sm text-gray-600 mb-4">📍 State Capitol Steps</p>
+            <a href="#" class="btn-primary w-full text-center">Join Rally</a>
+          </div>
+        </div>
+        
+        <!-- Event 3 -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-accent text-white rounded-lg p-3 mr-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">February 10, 2024</p>
+                <p class="text-sm text-gray-600">6:00 PM - 8:00 PM</p>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold font-heading text-primary mb-3">Advocacy Training Workshop</h3>
+            <p class="text-text mb-4">Learn effective advocacy techniques and how to engage with elected officials on healthcare issues.</p>
+            <p class="text-sm text-gray-600 mb-4">📍 Online Event</p>
+            <a href="#" class="btn-secondary w-full text-center">Register Free</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section id="newsletter" class="section-padding bg-primary text-white">
+    <div class="container mx-auto container-padding">
+      <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-6 text-white">Stay Connected</h2>
+            <p class="text-lg mb-6 opacity-95">
+              Get the latest updates on healthcare reform, action opportunities, and success stories delivered to your inbox.
+            </p>
+            <ul class="space-y-3 text-sm opacity-90">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Weekly action alerts and campaign updates
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Exclusive resources and advocacy tools
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Event notifications in your area
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ContactForm
+              title="Join Our Newsletter"
+              description="Be the first to know about new campaigns and opportunities to make a difference."
+              actionType="newsletter"
+              submitText="Subscribe Now"
+              showLocationFields={false}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support Section -->
+  <section id="donate" class="section-padding bg-gray-50">
+    <div class="container mx-auto container-padding">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-6">Support Our Work</h2>
+        <p class="text-lg text-text mb-8 max-w-2xl mx-auto">
+          Your support helps fund our advocacy efforts, grassroots organizing, and educational campaigns for healthcare reform.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold font-heading text-primary mb-3">$25</h3>
+            <p class="text-text mb-4">Supports advocacy materials for one local event</p>
+            <a href="#" class="btn-primary w-full">Donate $25</a>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-accent">
+            <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold font-heading text-primary mb-3">$50</h3>
+            <p class="text-text mb-4">Funds outreach to 100 potential activists</p>
+            <a href="#" class="btn-primary w-full">Donate $50</a>
+            <p class="text-xs text-accent mt-2 font-semibold">MOST POPULAR</p>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold font-heading text-primary mb-3">$100</h3>
+            <p class="text-text mb-4">Powers a full advocacy campaign for one month</p>
+            <a href="#" class="btn-primary w-full">Donate $100</a>
+          </div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#" class="btn-secondary">Custom Amount</a>
+          <a href="#" class="btn-primary">Monthly Giving</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

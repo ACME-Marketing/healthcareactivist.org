@@ -57,24 +57,165 @@ const createExcerpt = (htmlContent: string, maxLength: number = 150) => {
 ---
 <BaseLayout title="Healthcare Activist">
   <Hero />
-  <section class="py-12">
-    <div class="container mx-auto">
-      <h2 class="text-4xl font-bold font-heading text-center mb-8">Latest News & Updates</h2>
+  
+  <!-- Content Channels Overview -->
+  <section class="section-padding bg-gray-50">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-4">Our Channels</h2>
+        <p class="text-lg text-text max-w-2xl mx-auto">Explore our different channels focused on healthcare activism and reform.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <Card
+          title="The Fight"
+          href="/the-fight"
+          body="Understanding the challenges facing our healthcare system and why we must act now to reclaim healthcare as a human right."
+        />
+        <Card
+          title="Nurses Union Hub"
+          href="/nurses-union-hub"
+          body="Empowering nurses through collective action and advocacy for better working conditions and patient care."
+        />
+        <Card
+          title="Patient Power"
+          href="/patient-power"
+          body="Empowering patients to advocate for their rights and demand quality, affordable healthcare for all."
+        />
+      </div>
+    </div>
+  </section>
+  
+  <!-- Latest News Section -->
+  <section class="section-padding bg-white">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-4">Latest News & Updates</h2>
+        <p class="text-lg text-text max-w-2xl mx-auto">Stay informed about the latest developments in healthcare activism and reform efforts.</p>
+      </div>
       {posts.nodes.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.nodes.map((post: PostNode) => (
-            <Card
-              title={post.title}
-              href={`/posts${post.uri}`}
-              imageSrc={post.featuredImage?.node.sourceUrl}
-              imageAlt={post.featuredImage?.node.altText}
-              body={createExcerpt(post.content)}
-            />
-          ))}
-        </div>
+        <>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            {posts.nodes.map((post: PostNode) => (
+              <Card
+                title={post.title}
+                href={`/posts${post.uri}`}
+                imageSrc={post.featuredImage?.node.sourceUrl}
+                imageAlt={post.featuredImage?.node.altText}
+                body={createExcerpt(post.content)}
+              />
+            ))}
+          </div>
+          <div class="text-center">
+            <a href="/posts" class="btn-secondary">View All Posts</a>
+          </div>
+        </>
       ) : (
-        <p class="text-center text-lg">No posts found. Please check back later for new content.</p>
+        <div class="text-center py-12">
+          <div class="bg-gray-50 rounded-lg p-8 max-w-2xl mx-auto">
+            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+            </svg>
+            <h3 class="text-xl font-bold text-primary mb-4">Content Coming Soon</h3>
+            <p class="text-lg text-text mb-6">We're working hard to bring you the latest news and updates. Check back soon for new content!</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/take-action" class="btn-primary">Take Action Now</a>
+              <a href="/media" class="btn-secondary">Watch Our Videos</a>
+            </div>
+          </div>
+        </div>
       )}
+    </div>
+  </section>
+  
+  <!-- Media Highlights -->
+  <section class="section-padding bg-gray-50">
+    <div class="container mx-auto container-padding">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold font-heading text-primary mb-4">Latest Media</h2>
+        <p class="text-lg text-text max-w-2xl mx-auto">Watch our latest videos and listen to our podcast episodes.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Featured Video -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <svg class="w-6 h-6 text-accent mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+              </svg>
+              <span class="text-sm font-semibold text-accent">FEATURED VIDEO</span>
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3">The Healthcare Crisis Is a Labor Crisis</h3>
+            <p class="text-text mb-4">Understanding how staffing shortages and worker burnout directly impact patient care quality.</p>
+            <a href="/media" class="btn-primary">Watch Now</a>
+          </div>
+        </div>
+        
+        <!-- Featured Podcast -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <svg class="w-6 h-6 text-accent mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M9 12a3 3 0 106 0v-6a3 3 0 10-6 0v6z"></path>
+              </svg>
+              <span class="text-sm font-semibold text-accent">LATEST PODCAST</span>
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3">Healthcare Justice Now: Episode 1</h3>
+            <p class="text-text mb-4">Introduction to the healthcare activist movement and why change is urgently needed.</p>
+            <a href="/media" class="btn-primary">Listen Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="section-padding bg-primary text-white">
+    <div class="container mx-auto container-padding text-center">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mb-6 text-white">Ready to Make a Difference?</h2>
+      <p class="text-lg mb-8 max-w-3xl mx-auto opacity-95">
+        Join thousands of healthcare workers and advocates fighting for a system that puts patients before profits.
+      </p>
+      
+      <!-- Action Options Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
+        <div class="bg-white bg-opacity-10 rounded-lg p-6 backdrop-blur-sm">
+          <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Urgent Actions</h3>
+          <p class="text-sm opacity-90 mb-4">Time-sensitive campaigns that need immediate attention</p>
+          <a href="/take-action#urgent-actions" class="btn-primary bg-accent hover:bg-red-700 text-sm px-4 py-2">View Now</a>
+        </div>
+        
+        <div class="bg-white bg-opacity-10 rounded-lg p-6 backdrop-blur-sm">
+          <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Contact Reps</h3>
+          <p class="text-sm opacity-90 mb-4">Reach out to your elected officials about healthcare reform</p>
+          <a href="/take-action#contact" class="btn-secondary bg-white text-primary hover:bg-gray-100 text-sm px-4 py-2">Find Representatives</a>
+        </div>
+        
+        <div class="bg-white bg-opacity-10 rounded-lg p-6 backdrop-blur-sm">
+          <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Sign Petitions</h3>
+          <p class="text-sm opacity-90 mb-4">Add your voice to critical healthcare reform petitions</p>
+          <a href="/take-action#petitions" class="btn-secondary bg-white text-primary hover:bg-gray-100 text-sm px-4 py-2">Sign Now</a>
+        </div>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/take-action" class="btn-primary bg-accent hover:bg-red-700">View All Actions</a>
+        <a href="/about" class="btn-secondary bg-white text-primary hover:bg-gray-100">Learn More</a>
+      </div>
     </div>
   </section>
 </BaseLayout>
