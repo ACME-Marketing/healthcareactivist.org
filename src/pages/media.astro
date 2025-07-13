@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import YouTubeEmbed from '../components/YouTubeEmbed.astro';
+
+// Mocked YouTube video data
+const youtubeVideos = [
+  {
+    videoId: 'UaU5_g2-s-A',
+    title: 'The Healthcare Crisis Is a Labor Crisis',
+    thumbnail: 'https://i.ytimg.com/vi/UaU5_g2-s-A/hqdefault.jpg',
+  },
+  {
+    videoId: '5s-yY8so27s',
+    title: 'The For-Profit Healthcare Machine is Broken',
+    thumbnail: 'https://i.ytimg.com/vi/5s-yY8so27s/hqdefault.jpg',
+  },
+  {
+    videoId: 'dQw4w9WgXcQ',
+    title: 'Never Gonna Give You Up',
+    thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+  },
+];
+---
+
+<BaseLayout title="Media">
+  <div class="container mx-auto px-4">
+    <h1 class="text-4xl font-bold my-8">Media</h1>
+    <h2 class="text-3xl font-bold my-6">Latest YouTube Videos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {youtubeVideos.map(video => (
+        <div class="border p-4 rounded-lg">
+          <a href={`https://www.youtube.com/watch?v=${video.videoId}`} target="_blank" rel="noopener noreferrer">
+            <img src={video.thumbnail} alt={video.title} class="w-full h-auto rounded-lg mb-4" />
+            <h3 class="text-xl font-bold">{video.title}</h3>
+          </a>
+          <div class="my-4">
+            <YouTubeEmbed videoId={video.videoId} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

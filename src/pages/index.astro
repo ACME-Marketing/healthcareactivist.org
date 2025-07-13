@@ -1,16 +1,30 @@
 ---
-// @ts-nocheck
-// This is an Astro file. Ignore linter errors about 'class' vs 'className'.
-import BaseLayout from '../layouts/BaseLayout.astro'
-import Hero from '../components/Hero.astro'
-import HomepagePosts from '../components/HomepagePosts.astro'
-import { graphQLClient, gql } from '../lib/graphql'
-import { getCta } from '../lib/loadCtaData.js'
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+import { graphQLClient, gql } from '../lib/graphql';
 
-// GraphQL query for posts with tags "acmemarketing" or "all"
+interface PostNode {
+  title: string;
+  uri: string;
+  content: string;
+  featuredImage: {
+    node: {
+      sourceUrl: string;
+      altText: string;
+    };
+  } | null;
+}
+
+interface GetPostsResponse {
+  posts: {
+    nodes: PostNode[];
+  };
+}
+
 const GET_POSTS = gql`
   query GetPosts {
-    posts(where: { tagSlugIn: ["acmemarketing", "all"] }) {
+    posts(first: 3, where: { tagSlugIn: ["healthcareactivist", "all"] }) {
       nodes {
         title
         uri
@@ -19,98 +33,48 @@ const GET_POSTS = gql`
           node {
             sourceUrl
             altText
-            mediaDetails {
-              width
-              height
-            }
-          }
-        }
-        tags {
-          nodes {
-            name
-            slug
           }
         }
       }
     }
   }
-`
+`;
 
-let posts = []
-try {
-  const data = await graphQLClient.request(GET_POSTS)
-  posts = data.posts.nodes
-  console.log("Fetched posts for acmemarketing.us:", posts)
-  
-  // Debug: Log each post title and URI to check for duplicates
-  console.log("Post details:")
-  posts.forEach((post, index) => {
-    console.log(`${index + 1}. Title: "${post.title}" | URI: "${post.uri}"`)
-  })
-  
-  // Check for exact duplicates (same URI)
-  const uriCounts = {}
-  posts.forEach(post => {
-    uriCounts[post.uri] = (uriCounts[post.uri] || 0) + 1
-  })
-  
-  console.log("URI counts:", uriCounts)
-  
-  // Remove duplicate posts based on URI
-  const uniquePosts = posts.filter((post, index, self) => 
-    index === self.findIndex(p => p.uri === post.uri)
-  )
-  
-  if (uniquePosts.length !== posts.length) {
-    console.log(`Removed ${posts.length - uniquePosts.length} duplicate posts`)
-    console.log("Final unique posts:")
-    uniquePosts.forEach((post, index) => {
-      console.log(`${index + 1}. Title: "${post.title}" | URI: "${post.uri}"`)
-    })
+const { posts } = await graphQLClient.request<GetPostsResponse>(GET_POSTS);
+
+const createExcerpt = (htmlContent: string, maxLength: number = 150) => {
+  const text = htmlContent.replace(/<[^>]+>/g, ''); // Strip HTML tags
+  if (text.length <= maxLength) {
+    return text;
   }
-  
-  posts = uniquePosts
-} catch (error) {
-  console.error("Error fetching posts:", error)
-}
-
-const heroCta = getCta({ page: 'home', location: 'hero' })
-const sidebarCta = getCta({ page: 'home', location: 'sidebar' })
-const bottomCta = getCta({ page: 'home', location: 'bottom' })
+  const truncated = text.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  if (lastSpace === -1) {
+    return truncated + '...'; // No space found, just truncate
+  }
+  return truncated.substring(0, lastSpace) + '...';
+};
 ---
-
-<BaseLayout title="ACME Marketing">
+<BaseLayout title="Healthcare Activist">
   <Hero />
-  <div class="w-full relative overflow-hidden">
-    <!-- Gradient pulse background -->
-    <div class="absolute inset-0 animate-gradient bg-gradient-to-br from-cyan-500 via-blue-700 to-fuchsia-600 opacity-15 pointer-events-none"></div>
-    <!-- Content with relative positioning to stay above wave -->
-    <div class="relative z-10">
-      <HomepagePosts posts={posts} />
-    </div>
-  </div>
-  <!-- Bottom CTA Section -->
-  <section class="w-full flex justify-center mt-16 mb-0">
-    <div class="max-w-2xl w-full bg-gradient-to-br from-cyan-500 to-blue-700 text-white rounded-3xl shadow-2xl p-10 flex flex-col items-center gap-4 border-2 border-blue-200">
-      <h3 class="text-3xl font-bold mb-2 text-center">{bottomCta['TITLE']}</h3>
-      <p class="text-lg mb-4 text-center">{bottomCta['DESCRIPTION']}</p>
-      <a href="#" id="open-ebook-modal-bottom" class="inline-block bg-white text-blue-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow" data-book-id={bottomCta['BOOK ID']}>
-        {bottomCta['BUTTON TEXT']}
-      </a>
+  <section class="py-12">
+    <div class="container mx-auto">
+      <h2 class="text-4xl font-bold font-heading text-center mb-8">Latest News & Updates</h2>
+      {posts.nodes.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.nodes.map((post: PostNode) => (
+            <Card
+              title={post.title}
+              href={`/posts${post.uri}`}
+              imageSrc={post.featuredImage?.node.sourceUrl}
+              imageAlt={post.featuredImage?.node.altText}
+              body={createExcerpt(post.content)}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-center text-lg">No posts found. Please check back later for new content.</p>
+      )}
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 8s ease-in-out infinite;
-    animation-fill-mode: both;
-    animation-iteration-count: infinite;
-  }
-</style>
