@@ -2,16 +2,30 @@
 // src/components/Hero.astro
 ---
 <section class="bg-gradient-to-br from-primary to-blue-800 text-white section-padding">
-  <div class="container mx-auto container-padding text-center">
-    <h1 class="text-4xl md:text-6xl font-bold font-heading mb-6 text-white leading-tight">
-      Your Voice for a Better Healthcare System
-    </h1>
-    <p class="text-lg md:text-xl mb-8 max-w-4xl mx-auto leading-relaxed opacity-95">
-      We are dedicated to advocating for a healthcare system that is accessible, affordable, and equitable for all. Join us in making a difference.
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <a href="/take-action" class="btn-primary text-lg px-8 py-4">Take Action Now</a>
-      <a href="/about" class="btn-secondary text-lg px-8 py-4 bg-white text-primary hover:bg-gray-100">Learn Our Mission</a>
+  <div class="container mx-auto container-padding">
+    <div class="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
+      <!-- Logo Section -->
+      <div class="flex-shrink-0">
+        <img
+          src="/Logo-Final-300x300.jpg"
+          alt="Healthcare Activist Logo"
+          class="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 object-contain rounded-lg shadow-lg"
+        />
+      </div>
+      
+      <!-- Content Section -->
+      <div class="flex-1 text-center lg:text-left">
+        <h1 class="text-4xl md:text-6xl font-bold font-heading mb-6 text-white leading-tight">
+          Your Voice for a Better Healthcare System
+        </h1>
+        <p class="text-lg md:text-xl mb-8 max-w-4xl lg:max-w-none leading-relaxed opacity-95">
+          We are dedicated to advocating for a healthcare system that is accessible, affordable, and equitable for all. Join us in making a difference.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+          <a href="/take-action" class="btn-primary text-lg px-8 py-4">Take Action Now</a>
+          <a href="/about" class="btn-secondary text-lg px-8 py-4 bg-white text-primary hover:bg-gray-100">Learn Our Mission</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
