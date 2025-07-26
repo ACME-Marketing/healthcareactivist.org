@@ -1,10 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCta } from '../lib/loadCtaData.js';
-const heroCta = getCta({ page: 'services', location: 'hero' });
+
+// Default CTA data for services page
+const heroCta = {
+  'BUTTON TEXT': 'Download Healthcare Guide',
+  'BOOK ID': 'healthcare_guide'
+};
 ---
 
-<BaseLayout title="Services - ACME Marketing">
+<BaseLayout title="Services - Healthcare Activist">
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-gradient-to-br from-cyan-500 via-blue-700 to-fuchsia-600 text-white py-20 px-6">
     <div class="absolute inset-0 z-0">

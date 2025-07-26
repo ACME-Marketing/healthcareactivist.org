@@ -1,57 +1,37 @@
----
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { graphQLClient, gql } from '../../lib/graphql';
+import { GraphQLClient, gql } from 'graphql-request';
+import fs from 'fs/promises';
+import path from 'path';
 
-export const prerender = true;
+const endpoint = 'https://cms.acmemarketing.us/graphql';
 
-export async function getStaticPaths() {
-  const GET_FILTERED_POST_URIS = gql`
-    query GetFilteredPostUris {
-      posts(where: { tagSlugIn: ["healthcareactivist", "all"] }) {
-        nodes {
-          uri
-        }
-      }
-    }
-  `;
+const graphQLClient = new GraphQLClient(endpoint, {
+  headers: {
+    // Add authentication headers if needed
+  },
+});
 
-  const data = await graphQLClient.request(GET_FILTERED_POST_URIS) as { posts: { nodes: { uri: string }[] } };
-
-  return data.posts.nodes.map((post) => ({
-    params: { slug: post.uri.replace(/^\/|\/$/g, '') },
-  }));
-}
-
-const GET_SINGLE_POST = gql`
-  query GetSinglePost($uri: String!) {
-    postBy(uri: $uri) {
-      title
-      content
-      featuredImage {
-        node {
-          sourceUrl
-          altText
+const GET_ALL_POSTS = gql`
+  query GetAllPosts {
+    posts(where: { tagSlugIn: ["healthcareactivist", "all"] }) {
+      nodes {
+        uri
+        title
+        content
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
         }
       }
     }
   }
 `;
 
-const { slug } = Astro.params;
-const uri = `/${slug}/`;
+const POST_TEMPLATE = (post) => `---
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
-let post = null;
-
-try {
-  const data = await graphQLClient.request(GET_SINGLE_POST, { uri }) as { postBy: any };
-  post = data.postBy;
-} catch (error) {
-  console.error(`Error fetching post with URI: ${uri}`, error);
-}
-
-if (!post) {
-  return Astro.redirect('/404');
-}
+const post = ${JSON.stringify(post, null, 2)};
 ---
 <BaseLayout title={post.title}>
   <article class="section-padding bg-white">
@@ -118,3 +98,35 @@ if (!post) {
     </div>
   </article>
 </BaseLayout>
+`;
+
+async function generatePosts() {
+  try {
+    console.log('Fetching posts from GraphQL...');
+    const data = await graphQLClient.request(GET_ALL_POSTS);
+    const posts = data.posts.nodes;
+
+    console.log(`Found ${posts.length} posts to generate...`);
+
+    // Ensure posts directory exists
+    const postsDir = path.join(process.cwd(), 'src', 'pages', 'posts');
+    await fs.mkdir(postsDir, { recursive: true });
+
+    // Generate each post file
+    for (const post of posts) {
+      const slug = post.uri.replace(/^\/|\/$/g, '');
+      const filename = `${slug}.astro`;
+      const filepath = path.join(postsDir, filename);
+      
+      console.log(`Generating: ${filename}`);
+      await fs.writeFile(filepath, POST_TEMPLATE(post));
+    }
+
+    console.log(`✅ Successfully generated ${posts.length} post files`);
+  } catch (error) {
+    console.error('❌ Error generating posts:', error);
+    process.exit(1);
+  }
+}
+
+generatePosts();

@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const post = {
+  "uri": "/hca-test/",
+  "title": "HCA test",
+  "content": "\n<p>Healthcare Activist TEST</p>\n",
+  "featuredImage": {
+    "node": {
+      "sourceUrl": "https://cms.acmemarketing.us/wp-content/uploads/2025/06/Disendarkenment-1-1.jpg",
+      "altText": "Less dark, less bark, more bright, more light."
+    }
+  }
+};
+---
+<BaseLayout title={post.title}>
+  <article class="section-padding bg-white">
+    <div class="container mx-auto container-padding">
+      <div class="max-w-4xl mx-auto">
+        <!-- Article Header -->
+        <header class="mb-12">
+          <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold font-heading text-primary mb-6">{post.title}</h1>
+            <div class="flex items-center justify-center text-gray-600 text-sm">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <span>Published on Healthcare Activist</span>
+            </div>
+          </div>
+          
+          {post.featuredImage?.node?.sourceUrl && (
+            <div class="mb-8">
+              <img
+                src={post.featuredImage.node.sourceUrl}
+                alt={post.featuredImage.node.altText || post.title}
+                class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+              />
+            </div>
+          )}
+        </header>
+        
+        <!-- Article Content -->
+        <div class="prose prose-lg max-w-none mb-12">
+          <div set:html={post.content}></div>
+        </div>
+        
+        <!-- Article Footer -->
+        <footer class="border-t border-gray-200 pt-8">
+          <div class="bg-gray-50 rounded-lg p-8 mb-8">
+            <h3 class="text-xl font-bold font-heading text-primary mb-4 text-center">Take Action</h3>
+            <p class="text-text text-center mb-6">
+              Ready to join the fight for healthcare justice? Your voice matters in creating change.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/take-action" class="btn-primary">Get Involved</a>
+              <a href="/posts" class="btn-secondary">Read More Posts</a>
+            </div>
+          </div>
+          
+          <!-- Navigation -->
+          <div class="flex flex-col sm:flex-row justify-between items-center">
+            <a href="/posts" class="flex items-center text-accent hover:text-red-700 transition-colors duration-200 mb-4 sm:mb-0">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+              Back to All Posts
+            </a>
+            
+            <div class="flex gap-4">
+              <a href="/the-fight" class="text-primary hover:text-accent transition-colors duration-200">The Fight</a>
+              <a href="/nurses-union-hub" class="text-primary hover:text-accent transition-colors duration-200">Nurses Hub</a>
+              <a href="/patient-power" class="text-primary hover:text-accent transition-colors duration-200">Patient Power</a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
